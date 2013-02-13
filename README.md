@@ -1,23 +1,22 @@
 varlogger
 =========
-*work in progress*
+**work in progress**
 
-This is a little plugin for Sublime Text that quickly generates the code to log the variable under your cursor.
+This is a little plugin for Sublime Text that quickly generates the code to log the variable that you have selected.
 
-For a python example, if your cursor is the pipe on the following line:
+For a python example, if you have selected *wicked_var* in the following line:
 
 ```python
-awesome_func(wicked_var|)
+awesome_func(wicked_var)
 ```
 
 The output would be:
 
 ```python
-logger.debug('wicked_var:')
-logger.debug(wicked_var)
+logger.debug('wicked_var: ' + str(wicked_var))
 ```
 
-on new lines, properly indented.
+on a new line, properly indented.
 
 Or in javascript:
 
@@ -25,4 +24,4 @@ Or in javascript:
 console.log('wicked_var:', wicked_var);
 ```
 
-And so on.
+In PHP, it uses var_dump. And so on.
