@@ -22,8 +22,7 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
         if self.in_js():
             return (
-                "{0}console.log('{1}:');\n" +
-                "{0}console.log({1});\n").format(ws, var_name)
+                "{0}console.log('{1}:', {1});").format(ws, var_name)
 
         if self.in_php():
             return (
