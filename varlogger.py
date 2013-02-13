@@ -6,9 +6,8 @@ import re
 
 class LogvarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        print(self.current_scope())
+        # print(self.current_scope())
         var_name = self.get_cursor_word()
-        print('here')
         if var_name is not None:
             self.insert_with_newline(edit, self.log_str(var_name))
 
@@ -16,9 +15,11 @@ class LogvarCommand(sublime_plugin.TextCommand):
         ws = self.leading_whitespace()
 
         if self.in_python():
-            return (
-                "{0}logger.debug('{1}:')\n" +
-                "{0}logger.debug({1})\n").format(ws, var_name)
+            return ("{0}logger.debug('{1}: ' + str({1}))").format(ws, var_name)
+            # return (
+            #     "{0}logger.debug('{1}:')\n" +
+            #     "{0}logger.debug({1})\n" +
+            #     "{0}ob_flush();\n").format(ws, var_name)
 
         if self.in_js():
             return (
@@ -27,7 +28,8 @@ class LogvarCommand(sublime_plugin.TextCommand):
         if self.in_php():
             return (
                 "{0}var_dump('{1}:');\n" +
-                "{0}var_dump({1});\n").format(ws, var_name)
+                "{0}var_dump({1});\n" +
+                "{0}ob_flush();").format(ws, var_name)
 
     def insert_with_newline(self, edit, text):
         view = self.active_view()
