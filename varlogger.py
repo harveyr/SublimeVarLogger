@@ -6,8 +6,9 @@ import re
 
 class LogvarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
-        # self.insert_with_newline(edit, 'testme')
+        print(self.current_scope())
         var_name = self.get_cursor_word()
+        print('here')
         if var_name is not None:
             self.insert_with_newline(edit, self.log_str(var_name))
 
@@ -19,6 +20,11 @@ class LogvarCommand(sublime_plugin.TextCommand):
                 "{0}logger.debug('{1}:')\n" +
                 "{0}logger.debug({1})\n").format(ws, var_name)
 
+        if self.in_js():
+            return (
+                "{0}console.log('{1}:');\n" +
+                "{0}console.log({1});\n").format(ws, var_name)
+
         if self.in_php():
             return (
                 "{0}var_dump('{1}:');\n" +
@@ -28,8 +34,6 @@ class LogvarCommand(sublime_plugin.TextCommand):
         view = self.active_view()
         eol = view.line(view.sel()[0]).end()
         self.view.insert(edit, eol, "\n{}".format(text))
-        # self.view.insert(edit, eol, "\n")
-        # view.run_command('insertAndDecodeCharacters', 'blah')
 
     def get_cursor_word(self):
         view = self.active_view()
@@ -51,6 +55,10 @@ class LogvarCommand(sublime_plugin.TextCommand):
     def in_php(self):
         view = self.active_view()
         return 'source.php' in self.current_scope()
+
+    def in_js(self):
+        view = self.active_view()
+        return 'source.js' in self.current_scope()
 
     def current_scope(self):
         return self.active_view().scope_name(0)

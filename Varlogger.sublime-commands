@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "VarLogger: Log Variable",
+        "command": "logvar"
+    }
+]
