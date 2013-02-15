@@ -16,10 +16,6 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
         if self.in_python():
             return ("{0}logger.debug('{1}: ' + str({1}))").format(ws, var_name)
-            # return (
-            #     "{0}logger.debug('{1}:')\n" +
-            #     "{0}logger.debug({1})\n" +
-            #     "{0}ob_flush();\n").format(ws, var_name)
 
         if self.in_js():
             return (
@@ -27,9 +23,9 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
         if self.in_php():
             return (
-                "{0}var_dump('{1}:');\n" +
-                "{0}var_dump({1});\n" +
-                "{0}ob_flush();").format(ws, var_name)
+                "{0}print('{1}:'); " +
+                "var_dump({1}); " +
+                "ob_flush();").format(ws, var_name)
 
     def insert_with_newline(self, edit, text):
         view = self.active_view()
