@@ -23,9 +23,10 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
         if self.in_php():
             return (
-                "{0}print('{1}:'); " +
+                '{0}print("\\n-----\\n" . \'{1}:\' . "\\n-----\\n"); ' +
                 "var_dump({1}); " +
                 "ob_flush();").format(ws, var_name)
+
 
     def insert_with_newline(self, edit, text):
         view = self.active_view()
