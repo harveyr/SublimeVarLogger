@@ -4,6 +4,7 @@
 import sublime, sublime_plugin
 import re
 
+
 class LogvarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         # print(self.current_scope())
@@ -23,8 +24,9 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
         if self.in_php():
             return (
-                '{0}print("\\n-----\\n" . \'{1}:\' . "\\n-----\\n"); ' +
-                "var_dump({1}); " +
+                '{0}print("\\n-----\\n" . \'{1}:\'); ' +
+                'var_dump({1}); ' +
+                'print("\\n-----\\n"); ' +
                 "ob_flush();").format(ws, var_name)
 
 
