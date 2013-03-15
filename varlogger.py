@@ -14,21 +14,31 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
     def log_str(self, var_name):
         ws = self.leading_whitespace()
-
+        trimmed = self.trim_quoted_output(var_name)
+        print(var_name)
+        print(trimmed)
         if self.in_python():
-            return ("{0}logger.debug('{1}: ' + str({1}))").format(ws, var_name)
+            return ("{0}logger.debug('{1}: ' + str({2}))").format(ws,
+                trimmed, var_name)
 
         if self.in_js():
             return (
-                "{0}console.log('{1}:', {1});").format(ws, var_name)
+                "{0}console.log('{1}:', {2});").format(ws, trimmed,
+                var_name)
+
+        if self.in_coffee():
+            return (
+                "{0}console.log '{1}:', {2}").format(ws, trimmed, var_name)
 
         if self.in_php():
             return (
                 '{0}print("\\n-----\\n" . \'{1}:\'); ' +
-                'var_dump({1}); ' +
+                'var_dump({2}); ' +
                 'print("\\n-----\\n"); ' +
-                "ob_flush();").format(ws, var_name)
+                "ob_flush();").format(ws, trimmed, var_name)
 
+    def trim_quoted_output(self, output):
+        return re.sub(r'\'|\"', '', output)
 
     def insert_with_newline(self, edit, text):
         view = self.active_view()
@@ -49,18 +59,19 @@ class LogvarCommand(sublime_plugin.TextCommand):
         return matches[0]
 
     def in_python(self):
-        view = self.active_view()
         return 'python' in self.current_scope()
 
     def in_php(self):
-        view = self.active_view()
         return 'source.php' in self.current_scope()
 
     def in_js(self):
-        view = self.active_view()
         return 'source.js' in self.current_scope()
 
+    def in_coffee(self):
+        return 'source.coffee' in self.current_scope()
+
     def current_scope(self):
+        print(self.active_view().scope_name(0))
         return self.active_view().scope_name(0)
 
     def active_view(self):
