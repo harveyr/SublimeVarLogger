@@ -15,11 +15,10 @@ class LogvarCommand(sublime_plugin.TextCommand):
     def log_str(self, var_name):
         ws = self.leading_whitespace()
         trimmed = self.trim_quoted_output(var_name)
-        print(var_name)
-        print(trimmed)
+
         if self.in_python():
-            return ("{0}logger.debug('{1}: ' + str({2}))").format(ws,
-                trimmed, var_name)
+            return ("{ws}logger.debug('{trimmed}: {{}}'.format({var}))").format(
+                ws=ws, trimmed=trimmed, var=var_name)
 
         if self.in_js():
             return (
