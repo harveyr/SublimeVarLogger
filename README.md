@@ -1,4 +1,4 @@
-varlogger
+SublimeVarLogger
 =========
 **work in progress**
 
