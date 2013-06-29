@@ -4,7 +4,6 @@
 import sublime, sublime_plugin
 import re
 
-
 class LogvarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         # print(self.current_scope())
@@ -17,17 +16,17 @@ class LogvarCommand(sublime_plugin.TextCommand):
         trimmed = self.trim_quoted_output(var_name)
 
         if self.in_python():
-            return ("{ws}logger.debug('{trimmed}: {{}}'.format({var}))").format(
-                ws=ws, trimmed=trimmed, var=var_name)
+            log_cmd = self.get_python_log_command()
+            return ("{ws}{cmd}('{trimmed}: {{v}}'.format(v={var}))").format(
+                ws=ws, cmd=log_cmd, trimmed=trimmed, var=var_name)
 
         if self.in_js():
-            return (
-                "{0}console.log('{1}:', {2});").format(ws, trimmed,
-                var_name)
+            return ("{0}console.log('{1}:', {2});").format(
+                ws, trimmed, var_name)
 
         if self.in_coffee():
-            return (
-                "{0}console.log '{1}:', {2}").format(ws, trimmed, var_name)
+            return ("{0}console.log '{1}:', {2}").format(
+                ws, trimmed, var_name)
 
         if self.in_php():
             return (
@@ -43,6 +42,16 @@ class LogvarCommand(sublime_plugin.TextCommand):
         view = self.active_view()
         eol = view.line(view.sel()[0]).end()
         self.view.insert(edit, eol, "\n{}".format(text))
+
+    def get_python_log_command(self):
+        view = self.active_view()
+        match = view.find(r'(\w+) = logging\.getLogger', 0)
+        print('match: {v}'.format(v=match))
+        if match.a >= 0:
+            word = view.substr(view.word(match.a))
+            return '{logger}.debug'.format(logger=word)
+        return 'print'
+
 
     def get_cursor_word(self):
         view = self.active_view()
@@ -75,3 +84,7 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
     def active_view(self):
         return sublime.active_window().active_view()
+
+    def get_view_contents(self):
+        view = self.active_view()
+        return view.substr(sublime.Region(0, view.size()))
