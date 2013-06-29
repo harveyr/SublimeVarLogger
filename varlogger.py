@@ -1,8 +1,10 @@
 # http://www.sublimetext.com/docs/commands
 # http://www.sublimetext.com/docs/2/api_reference.html
 
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 import re
+
 
 class LogvarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
@@ -25,8 +27,7 @@ class LogvarCommand(sublime_plugin.TextCommand):
                 ws, trimmed, var_name)
 
         if self.in_coffee():
-            return ("{0}console.log '{1}:', {2}").format(
-                ws, trimmed, var_name)
+            return ("{0}console.log '{1}:', {2}").format(ws, trimmed, var_name)
 
         if self.in_php():
             return (
@@ -51,7 +52,6 @@ class LogvarCommand(sublime_plugin.TextCommand):
             word = view.substr(view.word(match.a))
             return '{logger}.debug'.format(logger=word)
         return 'print'
-
 
     def get_cursor_word(self):
         view = self.active_view()
