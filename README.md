@@ -11,7 +11,7 @@ The output would be:
 
 `print('wicked_var: {v}'.format(v=wicked_var))`
 
-...on a new line, properly indented. (If you have are using the logging module, it will try to find the name of your logger object and use `<loggername>.debug()` instead.)
+...on a new line, properly indented. (If you are using the logging module, it will try to find the name of your logger object and use `<loggername>.debug()` instead.)
 
 Or in **Javascript**:
 
