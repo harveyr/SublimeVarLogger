@@ -29,6 +29,9 @@ class LogvarCommand(sublime_plugin.TextCommand):
         if self.in_coffee():
             return ("{0}console.log '{1}:', {2}").format(ws, trimmed, var_name)
 
+        if self.in_go():
+            return('{0}log.Print("{1}: ", {2})'.format(ws, trimmed, var_name))
+
         if self.in_php():
             return (
                 '{0}print("\\n-----\\n" . \'{1}:\'); ' +
@@ -77,6 +80,9 @@ class LogvarCommand(sublime_plugin.TextCommand):
 
     def in_coffee(self):
         return 'source.coffee' in self.current_scope()
+
+    def in_go(self):
+        return 'source.go' in self.current_scope()
 
     def current_scope(self):
         print(self.active_view().scope_name(0))
