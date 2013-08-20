@@ -17,6 +17,6 @@ Or in **Javascript**:
 
 `console.log('wicked_var:', wicked_var);`
 
-Also works in **PHP** (`var_dump()`) and **CoffeeScript** (`console.log`).
+Also works in **Go** (`log.Print()`), **PHP** (`var_dump()`), and **CoffeeScript** (`console.log`).
 
 Comments are welcome!
