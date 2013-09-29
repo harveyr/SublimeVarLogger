@@ -11,10 +11,11 @@ And with a selection:
 
 (If you are using the logging module, it will try to find the name of your logger object and use `<loggername>.debug()` instead.)
 
-Or in **Javascript**:
 
-`console.log('wicked_var:', wicked_var);`
-
-Also works in **Go** (`log.Print()`), **PHP** (`var_dump()`), and **CoffeeScript** (`console.log`).
+Also works in: 
+- **Go**: `log.Print()`)
+- **Javascript**: `console.log()`
+- **CoffeeScript**: `console.log`
+- **PHP**: `var_dump()`
 
 Comments are welcome!
