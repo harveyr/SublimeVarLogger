@@ -1,17 +1,15 @@
 SublimeVarLogger
 =========
 
-This is a plugin for Sublime Text 3 that generates a line of code to log the variable that you have selected.
+This is a plugin for Sublime Text 3 that generates a line of code to log the variable that (a) you have selected, or (b) is under your cursor.
 
-For a **Python** example, if you have selected `wicked_var` in the following line:
+For example, in **Python**, with no selection:
+![Screenshot](https://raw.github.com/harveyr/SublimeVarLogger/master/screenshot1.png)
 
-`awesome_func(wicked_var)`
+And with a selection:
+![Screenshot](https://raw.github.com/harveyr/SublimeVarLogger/master/screenshot2.png)
 
-The output would be:
-
-`print('wicked_var: {v}'.format(v=wicked_var))`
-
-...on a new line, properly indented. (If you are using the logging module, it will try to find the name of your logger object and use `<loggername>.debug()` instead.)
+(If you are using the logging module, it will try to find the name of your logger object and use `<loggername>.debug()` instead.)
 
 Or in **Javascript**:
 
