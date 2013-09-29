@@ -63,9 +63,13 @@ class LogvarCommand(sublime_plugin.TextCommand):
         return word
 
     def leading_whitespace(self):
-        line = self.view.substr(self.view.line(self.view.sel()[0]))
-        matches = re.findall(r'(\s*)\S+', line)
-        return matches[0]
+        line = self.view.line(self.view.sel()[0])
+        line_str = self.view.substr(line)
+        matches = re.findall(r'(\s*)\S+', line_str)
+        whitespace = matches[0]
+        if line_str.strip()[-1] in [':', '{', '(', '[']:
+            whitespace += '    '
+        return whitespace
 
     def in_python(self):
         return 'python' in self.current_scope
