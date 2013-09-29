@@ -2,7 +2,7 @@ import sublime_plugin
 import re
 
 
-class LogvarCommand(sublime_plugin.TextCommand):
+class LogVarCommand(sublime_plugin.TextCommand):
     @property
     def current_scope(self):
         return self.view.scope_name(self.view.sel()[0].begin())
