@@ -5,7 +5,7 @@ This is a plugin for Sublime Text 3 that generates a line of code to log the var
 
 For a **Python** example, if you have selected `wicked_var` in the following line:
 
-`python awesome_func(wicked_var)`
+`awesome_func(wicked_var)`
 
 The output would be:
 
