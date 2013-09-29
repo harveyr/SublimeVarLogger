@@ -13,7 +13,7 @@ And with a selection:
 
 
 Also works in: 
-- **Go**: `log.Print()`)
+- **Go**: `log.Print()`
 - **Javascript**: `console.log()`
 - **CoffeeScript**: `console.log`
 - **PHP**: `var_dump()`
