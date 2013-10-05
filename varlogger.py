@@ -19,7 +19,7 @@ class LogVarCommand(sublime_plugin.TextCommand):
 
         if self.in_python():
             log_cmd = self.get_python_log_command()
-            return ("{ws}{cmd}('{trimmed}: {{v}}'.format(v={var}))").format(
+            return ("{ws}{cmd}('{trimmed}: {{0}}'.format({var}))").format(
                 ws=ws, cmd=log_cmd, trimmed=trimmed, var=log_text)
 
         if self.in_js():
