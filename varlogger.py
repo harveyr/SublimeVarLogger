@@ -10,7 +10,9 @@ class LogVarCommand(sublime_plugin.TextCommand):
     def run(self, edit):
         cursor_text = self.get_cursor_text()
         if cursor_text is not None:
-            self.insert_with_newline(edit, self.log_str(cursor_text))
+            code = self.log_str(cursor_text)
+            eol = self.view.line(self.view.sel()[0]).end()
+            self.view.insert(edit, eol, "\n{}".format(code))
 
     def log_str(self, log_text):
         """Return the code to log the variable."""
@@ -41,10 +43,6 @@ class LogVarCommand(sublime_plugin.TextCommand):
 
     def trim_quoted_output(self, output):
         return re.sub(r'\'|\"', '', output)
-
-    def insert_with_newline(self, edit, text):
-        eol = self.view.line(self.view.sel()[0]).end()
-        self.view.insert(edit, eol, "\n{}".format(text))
 
     def get_python_log_command(self):
         """Get the log command to use (print vs. use of logging module)."""
