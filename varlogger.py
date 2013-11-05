@@ -46,7 +46,7 @@ class LogVarCommand(sublime_plugin.TextCommand):
 
     def get_python_log_command(self):
         """Get the log command to use (print vs. use of logging module)."""
-        match = self.view.find(r'(\w+) = getLogger', 0)
+        match = self.view.find(r'(\w+) = (?:logging\.)getLogger', 0)
         if match.a >= 0:
             word = self.view.substr(self.view.word(match.a))
             return '{logger}.debug'.format(logger=word)
