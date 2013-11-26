@@ -21,35 +21,57 @@ class LogVarCommand(sublime_plugin.TextCommand):
 
         if self.in_python():
             log_cmd = self.get_python_log_command()
-            return ("{ws}{cmd}('{trimmed}: {{0}}'.format({var}))").format(
-                ws=ws, cmd=log_cmd, trimmed=trimmed, var=log_text)
+            return "{ws}{cmd}('{trimmed}: {{0}}'.format({var}))".format(
+                ws=ws,
+                cmd=log_cmd,
+                trimmed=trimmed,
+                var=log_text
+            )
 
         if self.in_js():
-            return ("{0}console.log('{1}:', {2});").format(
-                ws, trimmed, log_text)
+            return "{0}console.log('{1}:', {2});".format(
+                ws,
+                trimmed,
+                log_text
+            )
 
         if self.in_coffee():
-            return ("{0}console.log '{1}:', {2}").format(ws, trimmed, log_text)
+            return "{0}console.log '{1}:', {2}".format(
+                ws,
+                trimmed,
+                log_text
+            )
 
         if self.in_go():
-            return('{0}log.Print("{1}: ", {2})'.format(ws, trimmed, log_text))
+            return '{0}log.Print("{1}: ", {2})'.format(
+                ws,
+                trimmed,
+                log_text
+            )
 
         if self.in_php():
             return (
                 '{0}print("\\n-----\\n" . \'{1}:\'); ' +
                 'var_dump({2}); ' +
                 'print("\\n-----\\n"); ' +
-                "ob_flush();").format(ws, trimmed, log_text)
+                "ob_flush();"
+            ).format(
+                ws,
+                trimmed,
+                log_text
+            )
 
     def trim_quoted_output(self, output):
         return re.sub(r'\'|\"', '', output)
 
-    def get_python_log_command(self):
+    def get_python_log_command(self, use_logger=False):
         """Get the log command to use (print vs. use of logging module)."""
-        match = self.view.find(r'(\w+) = (?:logging\.)?getLogger', 0)
-        if match.a >= 0:
-            word = self.view.substr(self.view.word(match.a))
-            return '{logger}.info'.format(logger=word)
+
+        if use_logger:
+            match = self.view.find(r'(\w+) = (?:logging\.)?getLogger', 0)
+            if match.a >= 0:
+                word = self.view.substr(self.view.word(match.a))
+                return '{logger}.info'.format(logger=word)
         return 'print'
 
     def get_cursor_text(self):
